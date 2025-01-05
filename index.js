@@ -1,4 +1,7 @@
+#!/usr/bin/env node
+
 const { globSync } = require("glob");
+const path = require("path");
 
 // find a config file
 const config = {
@@ -11,18 +14,16 @@ const config = {
 const files = globSync("**/*.jpg", { cwd: process.cwd() });
 
 // loop through each file
-files.forEach((file) => {
-  console.log(file);
+files.forEach((filename) => {
+  const file = path.join(process.cwd(), filename);
   // run all the rules in the config
-  Object.keys(config.rules).forEach((rule) => {
+  Object.keys(config.rules).forEach(async (rule) => {
     // run the rule on the file
     const module = require(rule);
-    console.log(module);
-    // const result = rule(file);
-
-    // // if the rule fails, log the error
-    // if (!result.passed) {
-    //   console.error(result.message);
-    // }
+    try {
+      await module(file);
+    } catch (err) {
+      console.error(err.message);
+    }
   });
 });
