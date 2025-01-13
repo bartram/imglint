@@ -2,19 +2,39 @@
   "name": "imglint",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsx cli.ts",
+    "build": "tsc",
+    "test": "vitest --silent=false",
+    "lint": "eslint"
   },
-  "bin": "index.js",
+  "bin": {
+    "imglint": "cli.js"
+  },
   "author": "Bartram Nason",
   "license": "ISC",
   "workspaces": [
-    "rules/*"
+    "rules/*",
+    "plugins/*"
   ],
   "dependencies": {
-    "glob": "^11.0.0",
-    "ts-node": "^10.9.2",
+    "chalk": "^5.4.1",
+    "commander": "^13.0.0",
+    "findup-sync": "^5.0.0",
+    "image-size": "^1.2.0",
+    "lodash": "^4.17.21",
+    "ora": "^8.1.1",
     "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/findup-sync": "^4.0.5",
+    "@types/lodash": "^4.17.14",
+    "eslint": "^9.18.0",
+    "globals": "^15.14.0",
+    "tsx": "^4.19.2",
+    "typescript-eslint": "^8.20.0",
+    "vitest": "^2.1.8"
   }
 }
