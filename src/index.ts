@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { existsSync } from "node:fs";
 import ora from "ora";
-import { ImgLintConfig } from "./types";
+import { ImgLintConfig } from "./types.js";
 import { isEmpty } from "lodash-es";
 
 export const imgLint = async (config: ImgLintConfig, files: string[]) => {
@@ -45,4 +45,4 @@ export const imgLint = async (config: ImgLintConfig, files: string[]) => {
   }
 };
 
-export * from "./rules";
+export * from "./rules/index.js";

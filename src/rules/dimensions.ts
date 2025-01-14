@@ -1,5 +1,5 @@
-import sizeOf from "image-size";
-import { ImgLintRule } from "../types";
+import { imageSize } from "image-size";
+import { ImgLintRule } from "../types.js";
 
 export type Dimensions = { width: number; height: number; aspectRatio: number };
 
@@ -133,7 +133,7 @@ export const dimensions = (config: RuleConfig): ImgLintRule => {
   }
 
   const test = (filename: string) => {
-    const { width, height } = sizeOf(filename);
+    const { width, height } = imageSize(filename);
     if (!width || !height) {
       throw new Error("Unable to determine image dimensions");
     }

@@ -2,8 +2,8 @@
 
 import { Command } from "commander";
 import findup from "findup-sync";
-import { ImgLintConfig } from "./types";
-import { imgLint } from "./index";
+import { ImgLintConfig } from "./types.js";
+import { imgLint } from "./index.js";
 import { isEmpty } from "lodash-es";
 import path from "path";
 
@@ -28,7 +28,7 @@ if (!configPath) {
   process.exit(-1);
 }
 
-import(path.join(process.cwd(), configPath))
+import(path.resolve(process.cwd(), configPath))
   .then(({ default: config }: { default: ImgLintConfig }) => {
     if (!config) {
       console.error("Unable to load imglint config file");

@@ -7,7 +7,7 @@ import {
   testMax,
   testMin,
   testValue,
-} from "./dimensions";
+} from "./dimensions.js";
 import path from "node:path";
 
 describe("test helper functions", () => {
@@ -19,33 +19,33 @@ describe("test helper functions", () => {
 
   test("test min helper function", () => {
     expect(() =>
-      testDimensions(dimensions, { width: 2999 }, testMin)
+      testDimensions(dimensions, { width: 2999 }, testMin),
     ).not.toThrow();
     expect(() =>
-      testDimensions(dimensions, { height: 1999 }, testMin)
+      testDimensions(dimensions, { height: 1999 }, testMin),
     ).not.toThrow();
     expect(() =>
-      testDimensions(dimensions, { aspectRatio: 1.4 }, testMin)
-    ).not.toThrow();
-
-    expect(() =>
-      testDimensions(dimensions, { width: 3000 }, testMin)
-    ).not.toThrow();
-    expect(() =>
-      testDimensions(dimensions, { height: 2000 }, testMin)
-    ).not.toThrow();
-    expect(() =>
-      testDimensions(dimensions, { aspectRatio: 1.5 }, testMin)
+      testDimensions(dimensions, { aspectRatio: 1.4 }, testMin),
     ).not.toThrow();
 
     expect(() =>
-      testDimensions(dimensions, { width: 3001 }, testMin)
+      testDimensions(dimensions, { width: 3000 }, testMin),
+    ).not.toThrow();
+    expect(() =>
+      testDimensions(dimensions, { height: 2000 }, testMin),
+    ).not.toThrow();
+    expect(() =>
+      testDimensions(dimensions, { aspectRatio: 1.5 }, testMin),
+    ).not.toThrow();
+
+    expect(() =>
+      testDimensions(dimensions, { width: 3001 }, testMin),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { height: 2001 }, testMin)
+      testDimensions(dimensions, { height: 2001 }, testMin),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { aspectRatio: 1.6 }, testMin)
+      testDimensions(dimensions, { aspectRatio: 1.6 }, testMin),
     ).toThrow();
 
     expect(() => testValue(dimensions, 1999, testMin)).not.toThrow();
@@ -56,36 +56,36 @@ describe("test helper functions", () => {
 
   test("test max helper function", () => {
     expect(() =>
-      testDimensions(dimensions, { width: 2999 }, testMax)
+      testDimensions(dimensions, { width: 2999 }, testMax),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { height: 1999 }, testMax)
+      testDimensions(dimensions, { height: 1999 }, testMax),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { aspectRatio: 1.4 }, testMax)
+      testDimensions(dimensions, { aspectRatio: 1.4 }, testMax),
     ).toThrow();
 
     expect(() =>
-      testDimensions(dimensions, { width: 3000 }, testMax)
+      testDimensions(dimensions, { width: 3000 }, testMax),
     ).not.toThrow();
     expect(() =>
-      testDimensions(dimensions, { height: 2000 }, testMax)
+      testDimensions(dimensions, { height: 2000 }, testMax),
     ).not.toThrow();
     expect(() =>
-      testDimensions(dimensions, { aspectRatio: 1.5 }, testMax)
+      testDimensions(dimensions, { aspectRatio: 1.5 }, testMax),
     ).not.toThrow();
     expect(() =>
-      testDimensions(dimensions, { width: 3000, height: 2000 }, testMax)
+      testDimensions(dimensions, { width: 3000, height: 2000 }, testMax),
     ).not.toThrow();
 
     expect(() =>
-      testDimensions(dimensions, { width: 3001 }, testMax)
+      testDimensions(dimensions, { width: 3001 }, testMax),
     ).not.toThrow();
     expect(() =>
-      testDimensions(dimensions, { height: 2001 }, testMax)
+      testDimensions(dimensions, { height: 2001 }, testMax),
     ).not.toThrow();
     expect(() =>
-      testDimensions(dimensions, { aspectRatio: 1.6 }, testMax)
+      testDimensions(dimensions, { aspectRatio: 1.6 }, testMax),
     ).not.toThrow();
 
     expect(() => testValue(dimensions, 1999, testMax)).toThrow();
@@ -96,46 +96,46 @@ describe("test helper functions", () => {
 
   test("testExact helper function", () => {
     expect(() =>
-      testDimensions(dimensions, { width: 2999 }, testExact)
+      testDimensions(dimensions, { width: 2999 }, testExact),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { height: 1999 }, testExact)
+      testDimensions(dimensions, { height: 1999 }, testExact),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { aspectRatio: 1.4 }, testExact)
+      testDimensions(dimensions, { aspectRatio: 1.4 }, testExact),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { width: 3000, height: 999 }, testExact)
+      testDimensions(dimensions, { width: 3000, height: 999 }, testExact),
     ).toThrow();
 
     expect(() =>
-      testDimensions(dimensions, { width: 3000 }, testExact)
+      testDimensions(dimensions, { width: 3000 }, testExact),
     ).not.toThrow();
     expect(() =>
-      testDimensions(dimensions, { height: 2000 }, testExact)
+      testDimensions(dimensions, { height: 2000 }, testExact),
     ).not.toThrow();
     expect(() =>
-      testDimensions(dimensions, { aspectRatio: 1.5 }, testExact)
+      testDimensions(dimensions, { aspectRatio: 1.5 }, testExact),
     ).not.toThrow();
     expect(() =>
       testDimensions(
         dimensions,
         { width: 3000, height: 2000, aspectRatio: 1.5 },
-        testExact
-      )
+        testExact,
+      ),
     ).not.toThrow();
 
     expect(() =>
-      testDimensions(dimensions, { width: 3001 }, testExact)
+      testDimensions(dimensions, { width: 3001 }, testExact),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { height: 2001 }, testExact)
+      testDimensions(dimensions, { height: 2001 }, testExact),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { aspectRatio: 1.6 }, testExact)
+      testDimensions(dimensions, { aspectRatio: 1.6 }, testExact),
     ).toThrow();
     expect(() =>
-      testDimensions(dimensions, { width: 4001, height: 3000 }, testExact)
+      testDimensions(dimensions, { width: 4001, height: 3000 }, testExact),
     ).toThrow();
 
     expect(() => testValue(dimensions, 1999, testExact)).toThrow();
@@ -143,7 +143,7 @@ describe("test helper functions", () => {
     expect(() => testValue(dimensions, 3000, testExact)).toThrow();
     expect(() => testValue(dimensions, 3001, testExact)).toThrow();
     expect(() =>
-      testValue({ width: 1500, height: 1500, aspectRatio: 1 }, 1500, testExact)
+      testValue({ width: 1500, height: 1500, aspectRatio: 1 }, 1500, testExact),
     ).not.toThrow();
   });
 });
@@ -151,7 +151,7 @@ describe("test helper functions", () => {
 suite("test rules with 3000x2000 image", () => {
   const filename = path.join(
     __dirname,
-    "../../../__fixtures__/dimensions-3000x2000.jpg"
+    "../../__fixtures__/dimensions-3000x2000.jpg",
   );
   test("should return true for valid dimensions", async () => {
     const config: RuleConfig = {
@@ -174,7 +174,7 @@ suite("test rules with 3000x2000 image", () => {
 suite("test rules with 4000x3000 image", () => {
   const filename = path.join(
     __dirname,
-    "../../../__fixtures__/dimensions-4000x3000.jpg"
+    "../../__fixtures__/dimensions-4000x3000.jpg",
   );
   test("should throw error for invalid dimensions", async () => {
     const config: RuleConfig = {

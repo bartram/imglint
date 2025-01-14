@@ -1,5 +1,5 @@
 import exifr from "exifr";
-import { ImgLintRule } from "../types";
+import { ImgLintRule } from "../types.js";
 import { get } from "lodash-es";
 
 type RuleConfig = {

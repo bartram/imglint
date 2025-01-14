@@ -1,7 +1,7 @@
 import path from "node:path";
-import { imgLint } from "./index";
-import { dimensions, metadata } from "./rules";
-import { ImgLintConfig } from "./types";
+import { imgLint } from "./index.js";
+import { dimensions, metadata } from "./rules/index.js";
+import { ImgLintConfig } from "./types.js";
 
 describe("test basic configuration", () => {
   const config: ImgLintConfig = {

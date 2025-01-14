@@ -1,2 +1,2 @@
-export * from "./metadata";
-export * from "./dimensions";
+export * from "./metadata.js";
+export * from "./dimensions.js";
