@@ -1,5 +1,5 @@
 import sizeOf from "image-size";
-import { ImgLintRule } from "../../types";
+import { ImgLintRule } from "../types";
 
 export type Dimensions = { width: number; height: number; aspectRatio: number };
 
@@ -94,50 +94,56 @@ export const getTestFn = (key: keyof LimitRuleConfig): TestFn => {
 };
 
 export const dimensions = (config: RuleConfig): ImgLintRule => {
-  const rule = (filename: string) => {
+  let callback: (dimensions: Dimensions) => void, description: string;
+  if (typeof config === "object") {
+    if (isDimensions(config)) {
+      callback = (dimensions) => testDimensions(dimensions, config, testExact);
+      description = `Image dimensions are ${JSON.stringify(config)}`;
+    } else if (isLimitRuleConfig(config)) {
+      callback = (dimensions) => {
+        const keys: Array<keyof LimitRuleConfig> = ["min", "max", "exact"];
+        for (const key of keys) {
+          if (key in config && config[key]) {
+            const testFn = getTestFn(key);
+            const target = config[key];
+            if (isDimensions(target)) {
+              testDimensions(dimensions, target, testFn);
+            } else if (isNumber(target)) {
+              testValue(dimensions, target, testFn);
+            } else {
+              throw new Error("Invalid rule config");
+            }
+          }
+        }
+      };
+      description = `Image dimensions are ${JSON.stringify(config)}`;
+    } else {
+      throw new Error("Invalid rule config");
+    }
+  } else if (typeof config === "function") {
+    callback = (dimensions) => {
+      const valid = config(dimensions);
+      if (!valid) {
+        throw new Error("Image dimensions are invalid");
+      }
+    };
+    description = `Image dimensions match custom rule`;
+  } else {
+    throw new Error("Invalid rule config");
+  }
+
+  const test = (filename: string) => {
     const { width, height } = sizeOf(filename);
     if (!width || !height) {
       throw new Error("Unable to determine image dimensions");
     }
     const aspectRatio = width / height;
     const dimensions = { width, height, aspectRatio };
-    if (typeof config === "object") {
-      if (isDimensions(config)) {
-        testDimensions(dimensions, config, testExact);
-      } else {
-        if (isLimitRuleConfig(config)) {
-          const keys: Array<keyof LimitRuleConfig> = ["min", "max", "exact"];
-          for (const key of keys) {
-            if (key in config && config[key]) {
-              const testFn = getTestFn(key);
-              if (isDimensions(config[key])) {
-                testDimensions(dimensions, config[key], testFn);
-              } else if (isNumber(config[key])) {
-                testValue(dimensions, config[key], testFn);
-              } else {
-                throw new Error("Invalid rule config");
-              }
-            }
-          }
-        }
-      }
-    } else if (typeof config === "function") {
-      const valid = config({ width, height, aspectRatio });
-      if (!valid) {
-        throw new Error("Image dimensions are invalid");
-      }
-    }
+    callback(dimensions);
   };
 
-  if (typeof config === "object") {
-    if (isDimensions(config)) {
-      rule.description = `Image dimensions match ${JSON.stringify(config)}`;
-    } else {
-      rule.description = `Image dimensions match ${JSON.stringify(config)}`;
-    }
-  } else if (typeof config === "function") {
-    rule.description = `Image dimensions match custom rule`;
-  }
-
-  return rule;
+  return {
+    test,
+    description,
+  };
 };

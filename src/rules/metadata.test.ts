@@ -1,4 +1,4 @@
-import { metadata } from ".";
+import { metadata } from "./metadata";
 import path from "path";
 
 describe("metadata rule", () => {
@@ -8,29 +8,30 @@ describe("metadata rule", () => {
       equals: true,
     },
   };
-  const rule = metadata(config);
 
   test("should pass metadata rule", async () => {
+    const { test } = metadata(config);
     const filename = path.join(
       __dirname,
-      "../../__fixtures__/metadata-copyright.jpg"
+      "../../../__fixtures__/metadata-copyright.jpg"
     );
-    await expect(rule(filename)).resolves.not.toThrow();
+    await expect(test(filename)).resolves.not.toThrow();
   });
 
   test("should fail metadata rule", async () => {
+    const { test } = metadata(config);
     const filename = path.join(
       __dirname,
-      "../../__fixtures__/metadata-copyright_unknown.jpg"
+      "../../../__fixtures__/metadata-copyright_unknown.jpg"
     );
-    await expect(rule(filename)).rejects.toThrow();
+    await expect(test(filename)).rejects.toThrow();
   });
 });
 
 describe("metadata caption rules", () => {
   const filename = path.join(
     __dirname,
-    "../../__fixtures__/metadata-caption.jpg"
+    "../../../__fixtures__/metadata-caption.jpg"
   );
 
   test("should pass metadata caption rule", async () => {
@@ -42,7 +43,7 @@ describe("metadata caption rules", () => {
         },
       },
     };
-    const rule = metadata(config);
-    await expect(rule(filename)).resolves.not.toThrow();
+    const { test } = metadata(config);
+    await expect(test(filename)).resolves.not.toThrow();
   });
 });

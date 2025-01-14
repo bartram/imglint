@@ -1,8 +1,7 @@
 import path from "node:path";
-import { imgLint } from ".";
-import { dimensions } from "./rules/dimensions";
+import { imgLint } from "./index";
+import { dimensions, metadata } from "./rules";
 import { ImgLintConfig } from "./types";
-import { metadata } from "./rules/metadata";
 
 describe("test basic configuration", () => {
   const config: ImgLintConfig = {
@@ -11,14 +10,14 @@ describe("test basic configuration", () => {
   test("should pass dimensions rule", async () => {
     const filename = path.join(
       __dirname,
-      "./__fixtures__/dimensions-3000x2000.jpg"
+      "../__fixtures__/dimensions-3000x2000.jpg"
     );
     await expect(imgLint(config, [filename])).resolves.not.toThrow();
   });
   test("should fail dimensions rule", async () => {
     const filename = path.join(
       __dirname,
-      "./__fixtures__/dimensions-4000x3000.jpg"
+      "../__fixtures__/dimensions-4000x3000.jpg"
     );
     await expect(imgLint(config, [filename])).rejects.toThrow();
   });
@@ -34,7 +33,7 @@ describe("test complex configuration", () => {
   test("should pass config", async () => {
     const filename = path.join(
       __dirname,
-      "./__fixtures__/metadata-caption.jpg"
+      "../__fixtures__/metadata-caption.jpg"
     );
     await expect(imgLint(config, [filename]));
   });

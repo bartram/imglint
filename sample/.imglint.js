@@ -1,5 +1,4 @@
-import { metadata } from "@imglint/metadata";
-import { dimensions } from "@imglint/dimensions";
+import { metadata, dimensions } from "imglint";
 
 export default {
   rules: [

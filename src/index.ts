@@ -1,13 +1,13 @@
 import chalk from "chalk";
-import { get } from "lodash";
 import { existsSync } from "node:fs";
 import ora from "ora";
 import { ImgLintConfig } from "./types";
+import { isEmpty } from "lodash-es";
 
 export const imgLint = async (config: ImgLintConfig, files: string[]) => {
   const { options = {} } = config;
   const { abortEarly = false } = options;
-  const errors = [];
+  const errors: Record<string, unknown[]> = {};
   for (const file of files) {
     if (!existsSync(file)) {
       throw new Error(`File not found: ${file}`);
@@ -17,29 +17,32 @@ export const imgLint = async (config: ImgLintConfig, files: string[]) => {
       for (const rule of config.rules) {
         const spinner = ora(rule.description).start();
         try {
-          await rule(file);
+          await rule.test(file);
           spinner.succeed();
-        } catch (error) {
+        } catch (error: unknown) {
           spinner.fail();
-          errors.push({
-            file,
-            rule,
-            error,
-          });
-          // console.error(message ?? error);
+          errors[file] ??= [];
+          errors[file].push(error);
           if (abortEarly) {
-            throw error;
+            break;
           }
         }
       }
     }
     console.log();
   }
-  if (errors) {
-    for (const error of errors) {
-      const message = get(error, "message");
-      console.error(chalk.red(message));
+
+  if (!isEmpty(errors)) {
+    console.log(chalk.bold(chalk.red("Errors")));
+    for (const [filename, fileErrors] of Object.entries(errors)) {
+      console.log(chalk.underline(filename));
+      for (const error of fileErrors) {
+        console.error(chalk.red(error));
+      }
+      console.log();
     }
     throw errors;
   }
 };
+
+export * from "./rules";

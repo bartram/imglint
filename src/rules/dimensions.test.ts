@@ -7,10 +7,10 @@ import {
   testMax,
   testMin,
   testValue,
-} from ".";
+} from "./dimensions";
 import path from "node:path";
 
-suite("test helper functions", () => {
+describe("test helper functions", () => {
   const dimensions: Dimensions = {
     width: 3000,
     height: 2000,
@@ -151,14 +151,14 @@ suite("test helper functions", () => {
 suite("test rules with 3000x2000 image", () => {
   const filename = path.join(
     __dirname,
-    "../../__fixtures__/dimensions-3000x2000.jpg"
+    "../../../__fixtures__/dimensions-3000x2000.jpg"
   );
   test("should return true for valid dimensions", async () => {
     const config: RuleConfig = {
       max: 3000,
     };
-    const rule = dimensions(config);
-    expect(() => rule(filename)).not.toThrow();
+    const { test } = dimensions(config);
+    expect(() => test(filename)).not.toThrow();
   });
   test("should return false for invalid dimensions", async () => {
     const config: RuleConfig = {
@@ -166,15 +166,15 @@ suite("test rules with 3000x2000 image", () => {
         width: 4000,
       },
     };
-    const rule = dimensions(config);
-    expect(() => rule(filename)).toThrow();
+    const { test } = dimensions(config);
+    expect(() => test(filename)).toThrow();
   });
 });
 
 suite("test rules with 4000x3000 image", () => {
   const filename = path.join(
     __dirname,
-    "../../__fixtures__/dimensions-4000x3000.jpg"
+    "../../../__fixtures__/dimensions-4000x3000.jpg"
   );
   test("should throw error for invalid dimensions", async () => {
     const config: RuleConfig = {
@@ -182,7 +182,7 @@ suite("test rules with 4000x3000 image", () => {
         width: 3000,
       },
     };
-    const rule = dimensions(config);
-    expect(() => rule(filename)).toThrow();
+    const { test } = dimensions(config);
+    expect(() => test(filename)).toThrow();
   });
 });
