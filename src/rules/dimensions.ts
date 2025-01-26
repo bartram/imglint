@@ -94,6 +94,7 @@ export const getTestFn = (key: keyof LimitRuleConfig): TestFn => {
 };
 
 export const dimensions = (config: RuleConfig): ImgLintRule => {
+  const name = "Dimensions";
   let callback: (dimensions: Dimensions) => void, description: string;
   if (typeof config === "object") {
     if (isDimensions(config)) {
@@ -143,6 +144,7 @@ export const dimensions = (config: RuleConfig): ImgLintRule => {
   };
 
   return {
+    name,
     test,
     description,
   };

@@ -13,7 +13,7 @@ describe("metadata rule", () => {
     const { test } = metadata(config);
     const filename = path.join(
       __dirname,
-      "../../__fixtures__/metadata-copyright.jpg",
+      "../../__fixtures__/metadata-copyright.jpg"
     );
     await expect(test(filename)).resolves.not.toThrow();
   });
@@ -22,7 +22,7 @@ describe("metadata rule", () => {
     const { test } = metadata(config);
     const filename = path.join(
       __dirname,
-      "../../__fixtures__/metadata-copyright_unknown.jpg",
+      "../../__fixtures__/metadata-copyright_unknown.jpg"
     );
     await expect(test(filename)).rejects.toThrow();
   });
@@ -31,7 +31,7 @@ describe("metadata rule", () => {
 describe("metadata caption rules", () => {
   const filename = path.join(
     __dirname,
-    "../../__fixtures__/metadata-caption.jpg",
+    "../../__fixtures__/metadata-caption.jpg"
   );
 
   test("should pass metadata caption rule", async () => {

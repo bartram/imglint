@@ -1,48 +1,73 @@
 #!/usr/bin/env node
 
+import chalk from "chalk";
 import { Command } from "commander";
 import findup from "findup-sync";
-import { ImgLintConfig } from "./types.js";
-import { imgLint } from "./index.js";
 import { isEmpty } from "lodash-es";
+import { globSync } from "node:fs";
 import path from "path";
+import { imgLint } from "./index.js";
 
 const program = new Command();
-program.argument("[files...]", "images to lint", "./**/*.jpg");
+program.argument("[files...]", "files to lint");
 program.option(
-  "-c, --config-path <path>",
+  "-c, --config-file <path>",
   "path to config file",
   findup(".imglint.{js,ts}") ?? ""
 );
 program.parse();
 
-if (program.args.length === 0) {
-  console.error("No files to lint");
-  process.exit(-1);
-}
+const { configFile } = program.opts();
 
-const { configPath } = program.opts();
-
-if (!configPath) {
+if (!configFile) {
   console.error("Unable to find imglint config file");
   process.exit(-1);
 }
 
-import(path.resolve(process.cwd(), configPath))
-  .then(({ default: config }: { default: ImgLintConfig }) => {
-    if (!config) {
-      console.error("Unable to load imglint config file");
-      process.exit(-1);
-    } else if (isEmpty(config)) {
-      console.error("Empty config file");
-      process.exit(-1);
-    }
-    return imgLint(config, program.args);
-  })
-  .then(() => {
-    process.exit(0);
-  })
-  .catch((error) => {
-    console.log("error", error);
-    process.exit(-1);
+const { default: config } = await import(
+  path.resolve(process.cwd(), configFile)
+);
+
+if (!config) {
+  console.error("Unable to load imglint config file");
+  process.exit(-1);
+} else if (isEmpty(config)) {
+  console.error("Empty config file");
+  process.exit(-1);
+}
+
+// args take precedence over config.files
+const pattern = program.args.length > 0 ? program.args : config.files;
+if (!pattern || pattern.length === 0) {
+  console.error("No files to lint");
+  process.exit(-1);
+}
+
+const files = globSync(pattern);
+if (files.length === 0) {
+  console.error("No files found");
+  process.exit(-1);
+}
+
+const output = await imgLint(config, files);
+
+const errors = output.filter(({ results }) =>
+  results.some(({ error }) => error)
+);
+
+if (errors.length) {
+  console.log(chalk.bold(chalk.red("Errors")));
+  errors.forEach(({ file, results }) => {
+    console.log(chalk.underline(file));
+    results.forEach(({ rule, error }) => {
+      if (error) {
+        console.error(chalk.red(`${rule.name}: ${error.message}`));
+      }
+    });
+    console.log();
   });
+  process.exit(-1);
+}
+
+console.log("No ImgLint errors");
+process.exit(0);

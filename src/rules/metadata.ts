@@ -21,6 +21,7 @@ type Test = {
 };
 
 export const metadata = (config: RuleConfig): ImgLintRule => {
+  const name = "Metadata";
   const { key } = config;
 
   const tests: Array<Test> = [];
@@ -94,6 +95,7 @@ export const metadata = (config: RuleConfig): ImgLintRule => {
   const description = tests.map(({ description }) => description).join("\n");
 
   return {
+    name,
     test,
     description,
   };

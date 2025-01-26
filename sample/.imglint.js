@@ -1,6 +1,7 @@
 import { metadata, dimensions } from "imglint";
 
 export default {
+  files: "./images/**/*.jpg",
   rules: [
     metadata({
       key: "Marked",
