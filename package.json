@@ -15,7 +15,7 @@
     "format": "prettier src/**/*.ts --check",
     "prepublish": "npm run build"
   },
-  "repository": "https://github.com/bartram/imglint",
+  "repository": "github:bartram/imglint",
   "keywords": [
     "lint",
     "image",
