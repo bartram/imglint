@@ -1,6 +1,6 @@
 {
   "name": "imglint",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool for checking image files",
   "bin": "./dist/cli.js",
   "main": "./dist/index.js",
@@ -15,7 +15,7 @@
     "format": "prettier src/**/*.ts --check",
     "prepublish": "npm run build"
   },
-  "git repository": "https://github.com/bartram/imglint",
+  "repository": "https://github.com/bartram/imglint",
   "keywords": [
     "lint",
     "image",
@@ -36,11 +36,15 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.1",
+    "@semantic-release/npm": "^12.0.1",
     "@types/findup-sync": "^4.0.5",
     "@types/lodash-es": "^4.17.12",
     "eslint": "^9.18.0",
     "globals": "^15.14.0",
     "prettier": "^3.4.2",
+    "semantic-release": "^24.2.1",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.20.0",
     "vitest": "^2.1.8"
