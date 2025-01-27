@@ -12,8 +12,7 @@
     "start": "npm run build && node ./dist/cli.js",
     "test": "vitest src/**/*.test.ts --silent=false",
     "lint": "eslint src/**/*.ts",
-    "format": "prettier src/**/*.ts --check",
-    "prepublish": "npm run build"
+    "format": "prettier src/**/*.ts --check"
   },
   "repository": "github:bartram/imglint",
   "keywords": [
