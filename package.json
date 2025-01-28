@@ -2,7 +2,9 @@
   "name": "imglint",
   "version": "1.0.1",
   "description": "A tool for checking image files",
-  "bin": "./dist/cli.js",
+  "bin": {
+    "imglint": "dist/cli.js"
+  },
   "main": "./dist/index.js",
   "files": [
     "dist/*"
@@ -14,7 +16,10 @@
     "lint": "eslint src/**/*.ts",
     "format": "prettier src/**/*.ts --check"
   },
-  "repository": "github:bartram/imglint",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bartram/imglint.git"
+  },
   "keywords": [
     "lint",
     "image",
