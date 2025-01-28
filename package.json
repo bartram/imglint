@@ -1,6 +1,6 @@
 {
   "name": "imglint",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A tool for checking image files",
   "bin": {
     "imglint": "dist/cli.js"
