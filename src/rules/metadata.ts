@@ -54,7 +54,7 @@ export const metadata = (config: RuleConfig): ImgLintRule => {
       callback: (value) => {
         if (targetExists === true && !value) {
           throw new Error(`"${key}" does not exist`);
-        } else if (targetExists !== false && value) {
+        } else if (targetExists === false && value) {
           throw new Error(`"${key}" exists`);
         }
       },

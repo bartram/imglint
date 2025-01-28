@@ -8,12 +8,14 @@ import { globSync } from "node:fs";
 import path from "path";
 import { imgLint } from "./index.js";
 
+const cwd = process.env.INIT_CWD ?? process.cwd();
+
 const program = new Command();
 program.argument("[files...]", "files to lint");
 program.option(
   "-c, --config-file <path>",
   "path to config file",
-  findup(".imglint.{js,ts}") ?? ""
+  findup(".imglint.js", { cwd }) ?? ""
 );
 program.parse();
 
@@ -24,9 +26,7 @@ if (!configFile) {
   process.exit(-1);
 }
 
-const { default: config } = await import(
-  path.resolve(process.cwd(), configFile)
-);
+const { default: config } = await import(path.resolve(cwd, configFile));
 
 if (!config) {
   console.error("Unable to load imglint config file");

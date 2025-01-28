@@ -129,5 +129,10 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+.DS_Store
+
 # Ignore compiled JS
 /dist
+
+# Ignore .tests directory for local experimentation
+.tests

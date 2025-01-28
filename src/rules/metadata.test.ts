@@ -46,4 +46,27 @@ describe("metadata caption rules", () => {
     const { test } = metadata(config);
     await expect(test(filename)).resolves.not.toThrow();
   });
+
+
+  test("should pass metadata caption exists rule", async () => {
+    const config = {
+      key: "description.value",
+      value: {
+        exists: true,
+      },
+    };
+    const { test } = metadata(config);
+    await expect(test(filename)).resolves.not.toThrow();
+  });
+
+  test("should fail metadata caption doesn't exist rule", async () => {
+    const config = {
+      key: "description.value",
+      value: {
+        exists: false,
+      },
+    };
+    const { test } = metadata(config);
+    await expect(test(filename)).rejects.toThrow();
+  });
 });

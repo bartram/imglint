@@ -50,7 +50,7 @@ describe("test complex configuration", () => {
 });
 
 describe("test filename rule", async () => {
-  it("should pass filename rule", async () => {
+  test("should pass filename rule", async () => {
     const config: ImgLintConfig = {
       rules: [filename({ match: /^(.+)\.jpg$/i })],
     };
