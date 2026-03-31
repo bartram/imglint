@@ -1,7 +1,18 @@
 export default {
   branches: ["main"], // Defines the branches to trigger releases
   plugins: [
-    "@semantic-release/commit-analyzer", // Analyze commit messages
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        preset: "conventionalcommits",
+        releaseRules: [
+          { type: "chore", scope: "deps", release: "patch" },
+          { type: "chore", scope: "deps-dev", release: "patch" },
+          { type: "build", scope: "deps", release: "patch" },
+          { type: "build", scope: "deps-dev", release: "patch" },
+        ],
+      },
+    ], // Analyze commit messages
     "@semantic-release/release-notes-generator", // Generate release notes
     "@semantic-release/changelog", // Update changelog
     "@semantic-release/npm", // Publish to npm
