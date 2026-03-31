@@ -4,7 +4,6 @@ export default {
     [
       "@semantic-release/commit-analyzer",
       {
-        preset: "conventionalcommits",
         releaseRules: [
           { type: "chore", scope: "deps", release: "patch" },
           { type: "chore", scope: "deps-dev", release: "patch" },
