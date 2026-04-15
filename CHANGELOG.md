@@ -1,3 +1,5 @@
+## [1.1.5](https://github.com/bartram/imglint/compare/v1.1.4...v1.1.5) (2026-04-15)
+
 ## [1.1.4](https://github.com/bartram/imglint/compare/v1.1.3...v1.1.4) (2026-04-07)
 
 ## [1.1.3](https://github.com/bartram/imglint/compare/v1.1.2...v1.1.3) (2026-03-31)
